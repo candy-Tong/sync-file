@@ -1,20 +1,29 @@
 {
-  "name": "vue-compiler-sfc-test",
+  "name": "sync-file",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "packages/sync-file/src/index.js",
+  "bin": {
+    "sync-file": "./dist/index.js"
   },
+  "scripts": {
+    "dev": "cd packages/sync-file && pnpm run dev",
+    "dev-js": "tsx packages/sync-file/src/index.ts test/test-js",
+    "build": "tsc",
+    "release": "npm run build && npx crlf --set=LF  dist/*   && npm version patch && pnpm publish --registry https://registry.npmjs.org/",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {},
   "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
     "eslint": "~8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-vue": "^8.7.1",
-    "typescript": "^4.7.3",
-    "vue": "^3.2.37",
-    "vue-tsc": "^0.29.8",
-    "tsx": "^3.12.1"
+    "eslint-plugin-import": "^2.25.2",
+    "tsx": "^3.12.1",
+    "typescript": "^4.6.3"
   },
   "keywords": [],
   "author": "",

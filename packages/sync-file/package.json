@@ -1,0 +1,26 @@
+{
+  "name": "sync-file",
+  "version": "1.0.0",
+  "description": "",
+  "main": "packages/sync-file/src/index.js",
+  "bin": {
+    "sync-file": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "release": "npm run build && npx crlf --set=LF  dist/*   && npm version patch && pnpm publish --registry https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "execa": "^6.1.0",
+    "minimist": "^1.2.7"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "tsx": "^3.12.1",
+    "example-package": "workspace:^"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

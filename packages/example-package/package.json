@@ -1,0 +1,13 @@
+{
+  "name": "example-package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/test.ts",
+  "scripts": {},
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

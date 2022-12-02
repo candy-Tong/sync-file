@@ -1,0 +1,16 @@
+{
+  "name": "example-project",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "postinstall": "sync-file example-package"
+  },
+  "dependencies": {
+    "sync-file": "workspace:^"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

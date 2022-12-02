@@ -16,19 +16,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "declaration": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "declaration": true
   },
   "include": [
-    "*.ts"
-  ],
-  "files": [
-    "globals.d.ts"
   ],
   "compileOnSave": false
 }
