@@ -4,11 +4,11 @@ import {
   mkdir,
   rm,
 } from 'node:fs/promises';
+import _debug from 'debug';
 import { normalizeSyncConfig } from './utils';
 import { UserSyncConfig } from './types';
 import { processPath, tempPath } from './utils/path';
-import { ensureCacheMetaData } from './utils/metadata';
-import { debug } from './utils/debug';
+import { ensureMetaData, updateMetadata } from './utils/metadata';
 import { createEmptyFile, git } from './utils/git';
 import {
   copyFileToCacheDir,
@@ -17,6 +17,7 @@ import {
   copyFileToTempDirFromProject,
 } from './utils/file';
 
+const debug = _debug('sync-file:main');
 const argv = minimist(process.argv.slice(2));
 debug('argv:', argv);
 
@@ -64,7 +65,7 @@ async function start() {
   // copy file from last copy cache
 
   // ensure cache dir exist
-  const metadata = await ensureCacheMetaData();
+  const metadata = await ensureMetaData();
   await copyFileToTempDirFromCache();
   await git.addAll();
   await git.commit('files from last config');
@@ -80,6 +81,11 @@ async function start() {
   await git.checkout(latestBranchName);
   await copyFileToProject(syncConfig.fileList);
 
+  // git merge
+
+  // copy files from tempDir to project
+
   // copy files to cache dir
   await copyFileToCacheDir(syncConfig.fileList);
+  updateMetadata(syncConfig);
 }

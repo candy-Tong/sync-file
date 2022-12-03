@@ -1,11 +1,11 @@
 import type { Options as ExecaOptions } from 'execa';
 import { execa } from 'execa';
 import { SyncConfig, UserSyncConfig } from '../types';
-import { debug } from './debug';
 
 export function run(bin:string, args:string[] = [], opts:ExecaOptions<string> = {}) {
   return execa(bin, args, {
-    stdio: debug.enabled ? 'inherit' : 'ignore',
+    // stdio: debug.enabled ? 'inherit' : 'ignore',
+    stdio: 'ignore',
     ...opts,
   });
 }

@@ -1,8 +1,10 @@
-import { readdir, rm, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import _debug from 'debug';
 import { run } from './index';
 import { tempPath } from './path';
-import { debug } from './debug';
+
+const debug = _debug('sync-file:git');
 
 export async function gitAddAll() {
   try {
@@ -22,6 +24,7 @@ export async function gitCommit(message: string) {
   } catch (e: any) {
     debug('git commit error, mgs:', e.message);
   }
+  debug('git commit success', message);
 }
 
 /**
@@ -29,21 +32,24 @@ export async function gitCommit(message: string) {
  * @returns {Promise<void>}
  */
 export async function gitCheckout(branchName:string) {
-  await run('git', ['checkout', '-b', branchName], {
+  await run('git', ['checkout', branchName], {
     cwd: tempPath,
   });
+  debug('git checkout branch', branchName);
 }
 
 export async function gitInit(branchName: string) {
-  await run('git', ['init', branchName], {
+  await run('git', ['init', '-b', branchName], {
     cwd: tempPath,
   });
+  debug('git init, default branch', branchName);
 }
 
 export async function gitBranch(branchName: string) {
   await run('git', ['branch', branchName], {
     cwd: tempPath,
   });
+  debug('git branch', branchName);
 }
 
 export const git = {

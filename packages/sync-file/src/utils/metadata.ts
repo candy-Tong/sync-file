@@ -1,15 +1,17 @@
 import {
   access, mkdir, readFile, writeFile,
 } from 'node:fs/promises';
-import { cacheDir, metadataFilePath } from './path';
-import { debug } from './debug';
+import { metadataDir, metadataFilePath } from './path';
 import { MetaData } from '../types';
+import _debug from "debug";
+const debug = _debug('sync-file:metadata');
+
 
 /**
  * get metadata from cache file
  * if file not exist, create it
  */
-export async function ensureCacheMetaData():Promise<MetaData> {
+export async function ensureMetaData():Promise<MetaData> {
   try {
     await access(metadataFilePath);
     const file = await readFile(metadataFilePath, {
@@ -20,11 +22,16 @@ export async function ensureCacheMetaData():Promise<MetaData> {
     return metadata;
   } catch (e: any) {
     debug('read metafile error, msg:', e.message);
-    await mkdir(cacheDir, {
+    await mkdir(metadataDir, {
       recursive: true,
     });
 
     await writeFile(metadataFilePath, '{}');
     return {};
   }
+}
+
+export async function updateMetadata(data: MetaData) {
+  await writeFile(metadataFilePath, JSON.stringify(data));
+  return {};
 }

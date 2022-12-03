@@ -2,13 +2,16 @@
 import process from 'process';
 import { fileURLToPath } from 'url';
 import { resolve } from 'path';
-import { debug } from './debug';
+import _debug from 'debug';
+
+const debug = _debug('sync-file:path');
 
 export const processPath = process.cwd();
 export const filePath = fileURLToPath(import.meta.url);
 export const tempPath = resolve(filePath, '../../.temp');
-export const cacheDir = '.sync-file-cache';
-export const metadataFilePath = resolve(cacheDir, 'metadata.json');
+export const metadataDir = '.sync-file-cache';
+export const cacheDir = resolve(metadataDir, './cache');
+export const metadataFilePath = resolve(metadataDir, 'metadata.json');
 
 debug('path', {
   processPath,
