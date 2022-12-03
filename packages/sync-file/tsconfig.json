@@ -4,6 +4,7 @@
     "outDir": "dist"
   },
   "include": [
+    "*"
   ],
   "files": [
     "./src/index.ts"

@@ -2,7 +2,7 @@
   "name": "example-package",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/test.ts",
+  "main": "./src/test-js.js",
   "scripts": {},
   "dependencies": {
   },

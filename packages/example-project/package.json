@@ -4,10 +4,12 @@
   "description": "",
   "private": true,
   "scripts": {
+    "dev": "cross-env DEBUG=sync-file sync-file example-package",
     "postinstall": "sync-file example-package"
   },
   "dependencies": {
-    "sync-file": "workspace:^"
+    "sync-file": "workspace:^",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {},
   "keywords": [],

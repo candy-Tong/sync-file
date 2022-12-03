@@ -1,23 +1,21 @@
 {
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-airbnb-base"
+  ],
   "env": {
     "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "airbnb-base"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+    "node": true,
+    "jest": true,
+    "es6": true
   },
   "plugins": [
     "@typescript-eslint"
   ],
-  "rules": {
-    "no-console": [0],
-    "import/prefer-default-export": [0],
-    "no-use-before-define": [0]
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
   "settings": {
     "import/extensions": [
@@ -25,6 +23,33 @@
       ".jsx",
       ".ts",
       ".tsx"
+    ]
+  },
+  "rules": {
+    "no-use-before-define": "off",
+    "no-continue": "off",
+    "no-restricted-syntax": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off",
+    "no-shadow": "off",
+    "guard-for-in": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
+    "no-underscore-dangle": "off",
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true
+      }
     ]
   }
 }
