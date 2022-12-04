@@ -1,9 +1,10 @@
 import { copyFile, cp, mkdir } from 'node:fs/promises';
 import { basename, resolve, relative } from 'node:path';
 import _debug from 'debug';
+import fg from 'fast-glob';
 import { FileConfig } from '../types';
 import {
-  cacheDir,  processPath, tempPath,
+  cacheDir, processPath, tempFilesPath, tempGitPath,
 } from './path';
 
 const debug = _debug('sync-file:file');
@@ -35,46 +36,46 @@ async function copyFilesByConfig(fileList: FileConfig[]) {
 }
 export const copyFileToProject = copyFilesByConfig;
 
-export async function copyFileToCacheDir(fileList: FileConfig[]) {
-  const list:FileConfig[] = fileList.map((fileConfig) => {
-    const { relativeDestDir } = parseFileConfig(fileConfig);
-
-    return {
-      ...fileConfig,
-      // change the dest to cacheDir
-      // keep the relative path
-      destDir: resolve(cacheDir, relativeDestDir),
-    };
+export async function copyFileToProjectFromTempDir() {
+  await cp(tempFilesPath, processPath, {
+    recursive: true,
   });
-  return copyFilesByConfig(list);
+}
+
+export async function copyFileToCacheDirFromConfig(sourceDir: string) {
+  await cp(sourceDir, cacheDir, {
+    recursive: true,
+  });
 }
 
 export async function copyFileToTempDirFromCache() {
-  // ensure cacheDir exist
-  await mkdir(cacheDir, {
-    recursive: true,
-  });
-  await cp(cacheDir, tempPath, {
+  await cp(cacheDir, tempFilesPath, {
     recursive: true,
   });
 }
 
-export async function copyFileToTempDirFromProject(fileList: FileConfig[]) {
-  const list:FileConfig[] = fileList.map((fileConfig) => {
-    const { destDir, fileName } = parseFileConfig(fileConfig);
+export async function copyFileToTempDirFromProject() {
+  // 从 cache 中找出对应的文件
+  const entries = fg.sync([resolve(cacheDir, './**')], { dot: true });
 
-    const projectSource = resolve(processPath, destDir, fileName);
+  console.log(entries);
 
-    // change source to project files
-    // change the destDir to tempPath
-    return {
-      ...fileConfig,
-      // change the dest to cacheDir
-      source: projectSource,
-      destDir: tempPath,
-    };
+  await Promise.all(
+    entries.map(async (file) => {
+      const relativePath = relative(cacheDir, file);
+      const projectFile = resolve(processPath, relativePath);
+      const dest = resolve(tempFilesPath, relativePath);
+      await cp(projectFile, dest, {
+        recursive: true,
+      });
+    }),
+  );
+}
+
+export async function copyFileToTempDirFromConfig(sourceDir: string) {
+  await cp(sourceDir, tempFilesPath, {
+    recursive: true,
   });
-  return copyFilesByConfig(list);
 }
 
 function parseFileConfig(fileConfig: FileConfig) {

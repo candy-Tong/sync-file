@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "execa": "^6.1.0",
-    "minimist": "^1.2.7"
+    "minimist": "^1.2.7",
+    "fast-glob": "^3.2.12"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",

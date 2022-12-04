@@ -7,13 +7,14 @@ import {
 import _debug from 'debug';
 import { normalizeSyncConfig } from './utils';
 import { UserSyncConfig } from './types';
-import { processPath, tempPath } from './utils/path';
+import {cacheDir, processPath, tempFilesPath, tempGitPath} from './utils/path';
 import { ensureMetaData, updateMetadata } from './utils/metadata';
-import { createEmptyFile, git } from './utils/git';
 import {
-  copyFileToCacheDir,
-  copyFileToProject,
-  copyFileToTempDirFromCache,
+  mainBranchName, cleanGitDir, createEmptyFile, git, latestBranchName,
+} from './utils/git';
+import {
+  copyFileToCacheDirFromConfig, copyFileToProjectFromTempDir,
+  copyFileToTempDirFromCache, copyFileToTempDirFromConfig,
   copyFileToTempDirFromProject,
 } from './utils/file';
 
@@ -29,63 +30,61 @@ if (!entry) {
 
 start();
 
-const projectBranchName = 'project';
-const latestBranchName = 'latest';
-const cacheBranchName = 'main';
-
 async function start() {
-  const entryFunc = await import(entry);
+  const entryModule = await import(entry);
 
-  const userSyncConfig: UserSyncConfig = entryFunc.default(processPath);
-  const syncConfig = normalizeSyncConfig(userSyncConfig);
-  debug('normalize syncConfig:', syncConfig);
+  const sourceDir: string = entryModule.default;
 
   // clear temp dir, rm-rf
-  await rm(tempPath, {
+  await rm(tempGitPath, {
     force: true,
     recursive: true,
   });
 
   // create a temporary git repository
-  await mkdir(tempPath);
+  await mkdir(tempFilesPath, {
+    recursive: true,
+  });
+  // ensure cacheDir exist
+  await mkdir(cacheDir, {
+    recursive: true,
+  });
 
   // create cache branch, copy file from last copy cache
   // git init
-  await git.init(cacheBranchName);
-
-  // commit with empty file
+  await git.init(mainBranchName);
+  // create empty file to avoid commit nothing
   await createEmptyFile();
-  await git.addAll();
-  await git.commit('init');
-
-  // init branch
-  await git.branch(projectBranchName);
-  await git.branch(latestBranchName);
-
-  // copy file from last copy cache
-
-  // ensure cache dir exist
-  const metadata = await ensureMetaData();
   await copyFileToTempDirFromCache();
   await git.addAll();
-  await git.commit('files from last config');
+  await git.commit('last cache config files');
 
-  // create 'project' branch, copy current file in the project
-  await git.checkout(projectBranchName);
-  if (metadata.fileList) {
-  // copy project
-    await copyFileToTempDirFromProject(metadata.fileList);
-  }
+  // create the latest branch
+  await git.branch(latestBranchName);
 
-  // create 'latest' branch, copy file from the target path
+  // commit current project files
+  await cleanGitDir();
+  // copy project files
+  await copyFileToTempDirFromProject();
+  await git.addAll();
+  await git.commit('current project config files');
+
+  // commit the latest config files
   await git.checkout(latestBranchName);
-  await copyFileToProject(syncConfig.fileList);
+  await cleanGitDir();
+  await copyFileToTempDirFromConfig(sourceDir);
+  await git.addAll();
+  await git.commit('the latest config files');
 
   // git merge
+  await git.merge(mainBranchName);
 
   // copy files from tempDir to project
+  await copyFileToProjectFromTempDir();
 
   // copy files to cache dir
-  await copyFileToCacheDir(syncConfig.fileList);
-  updateMetadata(syncConfig);
+  await copyFileToCacheDirFromConfig(sourceDir);
+  // await updateMetadata(syncConfig);
 }
+
+// await copyFileToProject(syncConfig.fileList);

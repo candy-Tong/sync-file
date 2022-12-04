@@ -4,8 +4,8 @@ import { SyncConfig, UserSyncConfig } from '../types';
 
 export function run(bin:string, args:string[] = [], opts:ExecaOptions<string> = {}) {
   return execa(bin, args, {
-    // stdio: debug.enabled ? 'inherit' : 'ignore',
-    stdio: 'ignore',
+    stdio: 'inherit',
+    // stdio: 'ignore',
     ...opts,
   });
 }

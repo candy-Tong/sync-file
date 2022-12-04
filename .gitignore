@@ -22,3 +22,6 @@ yarn.lock
 package-lock.json
 .temp
 .sync-file-cache
+
+!packages/example-project/package.json
+packages/example-project/**
