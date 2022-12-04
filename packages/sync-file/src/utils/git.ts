@@ -1,12 +1,20 @@
-import { writeFile, readdir, rm } from 'node:fs/promises';
+import { writeFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import _debug from 'debug';
-import { run } from './index';
-import {tempFilesPath, tempGitPath} from './path';
+import { execa, Options as ExecaOptions } from 'execa';
+import { tempFilesPath, tempGitPath } from './path';
 
 const debug = _debug('sync-file:git');
 export const latestBranchName = 'latest';
 export const mainBranchName = 'main';
+
+export function run(bin:string, args:string[] = [], opts:ExecaOptions<string> = {}) {
+  return execa(bin, args, {
+    stdio: 'inherit',
+    // stdio: 'ignore',
+    ...opts,
+  });
+}
 
 export async function gitAddAll() {
   try {

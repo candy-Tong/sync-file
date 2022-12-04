@@ -5,10 +5,7 @@ import {
   rm,
 } from 'node:fs/promises';
 import _debug from 'debug';
-import { normalizeSyncConfig } from './utils';
-import { UserSyncConfig } from './types';
-import {cacheDir, processPath, tempFilesPath, tempGitPath} from './utils/path';
-import { ensureMetaData, updateMetadata } from './utils/metadata';
+import { cacheDir, tempFilesPath, tempGitPath } from './utils/path';
 import {
   mainBranchName, cleanGitDir, createEmptyFile, git, latestBranchName,
 } from './utils/git';
