@@ -2,6 +2,7 @@ import { writeFile, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import _debug from 'debug';
 import { execa, Options as ExecaOptions } from 'execa';
+import chalk from 'chalk';
 import { tempFilesPath, tempGitPath } from './path';
 
 const debug = _debug('sync-file:git');
@@ -63,10 +64,15 @@ export async function gitBranch(branchName: string) {
 }
 
 export async function gitMerge(branchName: string) {
-  await run('git', ['merge', branchName], {
-    cwd: tempGitPath,
-  });
-  debug('git merge', branchName);
+  try {
+    await run('git', ['merge', branchName, '-m', `merge ${branchName}`], {
+      cwd: tempGitPath,
+    });
+    debug('git merge', branchName);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(chalk.red('git merge error. please handle conflict'));
+  }
 }
 
 export const git = {

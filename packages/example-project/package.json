@@ -4,8 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "cross-env DEBUG=sync-file:* sync-file example-package",
-    "postinstall2": "sync-file example-package"
+    "test": "cross-env DEBUG=sync-file:* sync-file example-package",
   },
   "dependencies": {
     "sync-file": "workspace:^",

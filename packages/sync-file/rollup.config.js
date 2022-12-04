@@ -17,4 +17,10 @@ export default {
       dir: 'dist',
     },
   ],
+  external: [
+    'execa',
+    'minimist',
+    'fast-glob',
+    'chalk',
+  ],
 };

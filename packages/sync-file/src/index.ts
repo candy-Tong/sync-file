@@ -79,6 +79,10 @@ async function start() {
   // copy files from tempDir to project
   await copyFileToProjectFromTempDir();
 
+  await rm(cacheDir, {
+    force: true,
+    recursive: true,
+  });
   // copy files to cache dir
   await copyFileToCacheDirFromConfig(sourceDir);
   // await updateMetadata(syncConfig);
