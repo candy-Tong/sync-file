@@ -8,9 +8,7 @@
   },
   "scripts": {
     "dev": "cd packages/sync-file && pnpm run dev",
-    "dev-js": "tsx packages/sync-file/src/index.ts test/test-js",
-    "build": "tsc",
-    "release": "npm run build && npx crlf --set=LF  dist/*   && npm version patch && pnpm publish --registry https://registry.npmjs.org/",
+    "build": "cd packages/sync-file && pnpm run build",
     "lint": "eslint . --fix"
   },
   "devDependencies": {

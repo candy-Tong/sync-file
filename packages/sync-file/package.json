@@ -1,6 +1,6 @@
 {
   "name": "sync-file",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "main": "packages/sync-file/src/index.js",
@@ -9,9 +9,8 @@
   },
   "scripts": {
     "dev": "rollup -c --watch --sourcemap",
-    "dev-tsc": "tsc --watch",
-    "build": "tsc",
-    "release": "npm run build && npx crlf --set=LF  dist/*   && npm version patch && pnpm publish --registry https://registry.npmjs.org/"
+    "build": "rollup -c  --sourcemap",
+    "release": "npm run build && crlf --set=LF  dist/*   && npm version patch && pnpm publish --registry https://registry.npmjs.org/"
   },
   "dependencies": {
     "execa": "^6.1.0",
@@ -29,7 +28,8 @@
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
     "debug": "^4.3.4",
-    "@types/debug": "^4.1.7"
+    "@types/debug": "^4.1.7",
+    "crlf": "^1.1.1"
   },
   "keywords": [],
   "author": "",

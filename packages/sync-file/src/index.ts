@@ -85,7 +85,4 @@ async function start() {
   });
   // copy files to cache dir
   await copyFileToCacheDirFromConfig(sourceDir);
-  // await updateMetadata(syncConfig);
 }
-
-// await copyFileToProject(syncConfig.fileList);
