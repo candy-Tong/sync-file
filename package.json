@@ -1,14 +1,10 @@
 {
-  "name": "auto-sync-file",
-  "version": "1.0.0",
+  "name": "sync-file-package",
+  "private": true,
   "description": "",
-  "main": "packages/sync-file/src/index.js",
-  "bin": {
-    "sync-file": "./dist/index.js"
-  },
   "scripts": {
-    "dev": "cd packages/sync-file && pnpm run dev",
-    "build": "cd packages/sync-file && pnpm run build",
+    "dev": "lerna run dev --scope auto-sync-file",
+    "build": "lerna run build --scope auto-sync-file",
     "lint": "eslint . --fix",
     "update-version": "lerna version patch --no-private --yes",
     "publish-npm": "lerna publish from-git --yes",

@@ -1,11 +1,11 @@
 {
   "name": "auto-sync-file",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "type": "module",
   "main": "packages/sync-file/src/index.js",
   "bin": {
-    "sync-file": "bin/sync-file.js"
+    "auto-sync-file": "bin/sync-file.js"
   },
   "scripts": {
     "dev": "rollup -c --watch --sourcemap",
