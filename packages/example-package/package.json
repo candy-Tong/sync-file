@@ -1,6 +1,7 @@
 {
   "name": "example-package",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "./src/test-js.js",
   "scripts": {},
