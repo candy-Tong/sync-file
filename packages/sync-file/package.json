@@ -9,8 +9,7 @@
   },
   "scripts": {
     "dev": "rollup -c --watch --sourcemap",
-    "build": "rollup -c  --sourcemap",
-    "release": "npm run build && crlf --set=LF  dist/*   && npm version patch && pnpm publish --registry https://registry.npmjs.org/"
+    "build": "rollup -c  --sourcemap"
   },
   "dependencies": {
     "chalk": "^5.1.2",
@@ -34,5 +33,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "gitHead": "efc981f2a92c151f0e11d286099e3f134b1e5f95"
+  "gitHead": "2e94660d7168789fb409d8ce886ee36f2842ba18"
 }
