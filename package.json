@@ -12,7 +12,7 @@
     "lint": "eslint . --fix",
     "update-version": "lerna version patch --no-private --yes",
     "publish-npm": "lerna publish from-git --yes",
-    "release": "pnpm run build && pnpm run update-version && pnpm run publish-npm"
+    "release": "pnpm run build && lerna version patch --no-private --yes && lerna publish from-git --yes"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
