@@ -1,0 +1,17 @@
+{
+  "name": "example-project-auto-install",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "cross-env DEBUG=sync-file:* auto-sync-file example-package"
+  },
+  "dependencies": {
+    "auto-sync-file": "workspace:^",
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

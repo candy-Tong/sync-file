@@ -11,8 +11,7 @@ export const mainBranchName = 'main';
 
 export function run(bin:string, args:string[] = [], opts:ExecaOptions<string> = {}) {
   return execa(bin, args, {
-    stdio: 'inherit',
-    // stdio: 'ignore',
+    stdio: debug.enabled ? 'inherit' : 'ignore',
     ...opts,
   });
 }
@@ -70,7 +69,6 @@ export async function gitMerge(branchName: string) {
     });
     debug('git merge', branchName);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(chalk.red('git merge error. please handle conflict'));
   }
 }

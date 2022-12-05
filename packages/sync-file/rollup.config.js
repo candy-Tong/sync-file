@@ -22,5 +22,6 @@ export default {
     'minimist',
     'fast-glob',
     'chalk',
+    '@antfu/ni',
   ],
 };

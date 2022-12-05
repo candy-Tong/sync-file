@@ -6,9 +6,9 @@
     "dev": "lerna run dev --scope auto-sync-file",
     "build": "lerna run build --scope auto-sync-file",
     "lint": "eslint . --fix",
-    "update-version": "lerna version patch --no-private --yes",
-    "publish-npm": "lerna publish from-git --yes",
-    "release": "pnpm run build && lerna version patch --no-private --yes --force-publish && lerna publish from-git --yes"
+    "update-version": "lerna version patch --no-private --yes --force-publish",
+    "publish-npm": "lerna publish from-git --yes --registry https://registry.npmjs.org",
+    "release": "npm run build && npm run update-version  && npm run publish-npm"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",

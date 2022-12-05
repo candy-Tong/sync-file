@@ -8,7 +8,8 @@ const debug = _debug('sync-file:path');
 
 export const processPath = process.cwd();
 export const filePath = fileURLToPath(import.meta.url);
-export const tempGitPath = resolve(filePath, '../../.temp');
+export const packagePath = resolve(filePath, '../../');
+export const tempGitPath = resolve(packagePath, '.temp');
 export const tempFilesPath = resolve(tempGitPath, './files');
 export const metadataDir = '.sync-file-cache';
 export const cacheDir = resolve(metadataDir, './cache');

@@ -1,11 +1,15 @@
 import minimist from 'minimist';
 import * as process from 'process';
+import chalk from 'chalk';
 import {
   mkdir,
   rm,
 } from 'node:fs/promises';
 import _debug from 'debug';
-import { cacheDir, tempFilesPath, tempGitPath } from './utils/path';
+import { execa } from 'execa';
+import {
+  cacheDir, packagePath, tempFilesPath, tempGitPath,
+} from './utils/path';
 import {
   mainBranchName, cleanGitDir, createEmptyFile, git, latestBranchName,
 } from './utils/git';
@@ -28,6 +32,10 @@ if (!entry) {
 start();
 
 async function start() {
+  await execa('npx', ['ni', entry, '--ignore-script', '-D'], {
+    stdio: 'inherit',
+    cwd: packagePath,
+  });
   const entryModule = await import(entry);
 
   const sourceDir: string = entryModule.default;
@@ -85,4 +93,5 @@ async function start() {
   });
   // copy files to cache dir
   await copyFileToCacheDirFromConfig(sourceDir);
+  console.log(chalk.blue('sync files successfully'));
 }
