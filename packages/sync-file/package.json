@@ -26,12 +26,13 @@
     "@types/minimist": "^1.2.2",
     "crlf": "^1.1.1",
     "debug": "^4.3.4",
-    "example-package": "workspace:^",
+    "example-package": "^1.0.0",
     "rollup": "^3.5.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "efc981f2a92c151f0e11d286099e3f134b1e5f95"
 }
