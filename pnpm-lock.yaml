@@ -58,7 +58,6 @@ importers:
       chalk: ^5.1.2
       crlf: ^1.1.1
       debug: ^4.3.4
-      example-package: workspace:^1.0.0
       execa: ^6.1.0
       fast-glob: ^3.2.12
       minimist: ^1.2.7
@@ -79,7 +78,6 @@ importers:
       '@types/minimist': 1.2.2
       crlf: 1.1.1
       debug: 4.3.4
-      example-package: link:../example-package
       rollup: 3.6.0
       tslib: 2.4.1
       typescript: 4.9.3
