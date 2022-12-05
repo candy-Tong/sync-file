@@ -11,8 +11,8 @@
     "build": "cd packages/sync-file && pnpm run build",
     "lint": "eslint . --fix",
     "version": "lerna version patch --no-private --yes",
-    "publish": "lerna publish from-git --yes",
-    "release": "pnpm run build && pnpm run version && pnpm run publish"
+    "publish-npm": "lerna publish from-git --yes",
+    "release": "pnpm run build && pnpm run version && pnpm run publish-npm"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
