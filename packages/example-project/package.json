@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "cross-env DEBUG=sync-file:* auto-sync-file example-package"
+    "test": "cross-env DEBUG=sync-file:* auto-sync-file auto-sync-file-example-package"
   },
   "dependencies": {
     "auto-sync-file": "workspace:^",

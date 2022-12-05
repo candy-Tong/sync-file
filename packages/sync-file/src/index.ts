@@ -6,9 +6,8 @@ import {
   rm,
 } from 'node:fs/promises';
 import _debug from 'debug';
-import { execa } from 'execa';
 import {
-  cacheDir, packagePath, tempFilesPath, tempGitPath,
+  cacheDir, tempFilesPath, tempGitPath,
 } from './utils/path';
 import {
   mainBranchName, cleanGitDir, createEmptyFile, git, latestBranchName,
@@ -18,6 +17,7 @@ import {
   copyFileToTempDirFromCache, copyFileToTempDirFromConfig,
   copyFileToTempDirFromProject,
 } from './utils/file';
+import { installAndLoadPkg } from './utils/package';
 
 const debug = _debug('sync-file:main');
 const argv = minimist(process.argv.slice(2));
@@ -32,13 +32,13 @@ if (!entry) {
 start();
 
 async function start() {
-  await execa('npx', ['ni', entry, '--ignore-script', '-D'], {
-    stdio: 'inherit',
-    cwd: packagePath,
-  });
-  const entryModule = await import(entry);
-
-  const sourceDir: string = entryModule.default;
+  let sourceDir: string;
+  try {
+    const entryModule = await import(entry);
+    sourceDir = entryModule.default;
+  } catch (e) {
+    sourceDir = await installAndLoadPkg(entry);
+  }
 
   // clear temp dir, rm-rf
   await rm(tempGitPath, {
@@ -83,7 +83,6 @@ async function start() {
 
   // git merge
   await git.merge(mainBranchName);
-
   // copy files from tempDir to project
   await copyFileToProjectFromTempDir();
 
