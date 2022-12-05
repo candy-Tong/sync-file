@@ -1,5 +1,5 @@
 {
-  "name": "sync-file",
+  "name": "auto-sync-file",
   "version": "1.0.0",
   "description": "",
   "main": "packages/sync-file/src/index.js",
@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "cd packages/sync-file && pnpm run dev",
     "build": "cd packages/sync-file && pnpm run build",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "version": "lerna version patch --no-private --yes"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
