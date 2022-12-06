@@ -28,5 +28,5 @@ export async function installAndLoadPkg(name: string): Promise<string> {
   `);
   const res = await import(tempPkgEntryPath);
   debug('module result:', res.default);
-  return res;
+  return res.default;
 }

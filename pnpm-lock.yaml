@@ -39,14 +39,6 @@ importers:
       auto-sync-file: link:../sync-file
       cross-env: 7.0.3
 
-  packages/example-project-auto-install:
-    specifiers:
-      auto-sync-file: workspace:^
-      cross-env: ^7.0.3
-    dependencies:
-      auto-sync-file: link:../sync-file
-      cross-env: 7.0.3
-
   packages/sync-file:
     specifiers:
       '@antfu/ni': ^0.18.8
@@ -81,6 +73,12 @@ importers:
       rollup: 3.6.0
       tslib: 2.4.1
       typescript: 4.9.3
+
+  packages/sync-file/temp-pkg:
+    specifiers:
+      auto-sync-file-example-package: workspace:^1.0.0
+    devDependencies:
+      auto-sync-file-example-package: link:../../example-package
 
 packages:
 

@@ -1,7 +1,8 @@
-import { cp } from 'node:fs/promises';
+import { cp, stat } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import _debug from 'debug';
 import fg from 'fast-glob';
+import chalk from 'chalk';
 import {
   cacheDir, processPath, tempFilesPath,
 } from './path';
@@ -40,9 +41,13 @@ export async function copyFileToTempDirFromProject() {
       const relativePath = relative(cacheDir, file);
       const projectFile = resolve(processPath, relativePath);
       const dest = resolve(tempFilesPath, relativePath);
-      await cp(projectFile, dest, {
-        recursive: true,
-      });
+      try {
+        await cp(projectFile, dest, {
+          recursive: true,
+        });
+      } catch (e) {
+        console.log(chalk.red(`copy file from project fail, maybe not exist, file: ${projectFile}`));
+      }
     }),
   );
   debug('copy files, project > temp dir');
