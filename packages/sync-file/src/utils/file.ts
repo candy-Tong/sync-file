@@ -1,5 +1,5 @@
 import { cp } from 'node:fs/promises';
-import { resolve, relative, posix } from 'node:path';
+import { resolve, relative, posix, win32 } from 'node:path';
 import _debug from 'debug';
 import fg from 'fast-glob';
 import chalk from 'chalk';
@@ -31,9 +31,10 @@ export async function copyFileToTempDirFromCache() {
 }
 
 export async function copyFileToTempDirFromProject() {
-  // 从 cache 中找出对应的文件
-  // fast-glob 不支持 window \ 作为路径，必须使用 POSIX 的 /
-  const entries = fg.sync([posix.resolve(cacheDir, './**')], { dot: true });
+  // find all project file according to cache file
+  // fast-glob not support to use window \ seq，must use POSIX seq /
+  const normalizePath = resolve(cacheDir, './**').split(win32.sep).join(posix.sep);
+  const entries = fg.sync([normalizePath], { dot: true });
 
   debug('cache files:', entries);
 
