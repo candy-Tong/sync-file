@@ -7,7 +7,7 @@ import { tempFilesPath, tempGitPath } from './path';
 
 const debug = _debug('sync-file:git');
 export const latestBranchName = 'latest';
-export const mainBranchName = 'main';
+export const mainBranchName = 'master';
 
 export function run(bin:string, args:string[] = [], opts:ExecaOptions<string> = {}) {
   return execa(bin, args, {
@@ -49,7 +49,9 @@ export async function gitCheckout(branchName:string) {
 }
 
 export async function gitInit(branchName: string) {
-  await run('git', ['init', '-b', branchName], {
+  // git init -b can set the default branch for git
+  // but i maybe not support in old version git
+  await run('git', ['init'], {
     cwd: tempGitPath,
   });
   debug('git init, default branch', branchName);
