@@ -18,10 +18,7 @@ export default {
     },
   ],
   external: [
-    'execa',
-    'minimist',
-    'fast-glob',
+    // this package build into bundle will cause fail
     'chalk',
-    '@antfu/ni',
   ],
 };

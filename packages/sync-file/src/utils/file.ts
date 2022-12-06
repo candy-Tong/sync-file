@@ -1,4 +1,4 @@
-import { cp, stat } from 'node:fs/promises';
+import { cp } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import _debug from 'debug';
 import fg from 'fast-glob';
@@ -46,7 +46,7 @@ export async function copyFileToTempDirFromProject() {
           recursive: true,
         });
       } catch (e) {
-        console.log(chalk.red(`copy file from project fail, maybe not exist, file: ${projectFile}`));
+        console.log(chalk.red(`[auto-sync-file] copy file from project fail, maybe not exist, file: ${projectFile}`));
       }
     }),
   );

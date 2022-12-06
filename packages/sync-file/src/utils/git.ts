@@ -69,7 +69,7 @@ export async function gitMerge(branchName: string) {
     });
     debug('git merge', branchName);
   } catch (e) {
-    console.error(chalk.red('git merge error. please handle conflict'));
+    console.error(chalk.red('[auto-sync-file] git merge error. please handle conflict'));
   }
 }
 

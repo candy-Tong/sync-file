@@ -92,5 +92,5 @@ async function start() {
   });
   // copy files to cache dir
   await copyFileToCacheDirFromConfig(sourceDir);
-  console.log(chalk.blue('sync files successfully'));
+  console.log(chalk.blue('[auto-sync-file] sync files successfully'));
 }

@@ -19,7 +19,7 @@ export async function installAndLoadPkg(name: string): Promise<string> {
     stdio: debug.enabled ? 'inherit' : 'ignore',
     cwd: tempPkgPath,
   });
-  await execa('npx', ['ni', name, '--ignore-script', '-D'], {
+  await execa('npm', ['i', name, '--ignore-script', '-D'], {
     stdio: debug.enabled ? 'inherit' : 'ignore',
     cwd: tempPkgPath,
   });
