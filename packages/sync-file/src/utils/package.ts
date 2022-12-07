@@ -1,17 +1,15 @@
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { execa } from 'execa';
 import { resolve } from 'path';
 import _debug from 'debug';
 import { tempPkgPath } from './path';
+import { rmrf } from './file';
 
 const debug = _debug('sync-file:package');
 const tempPkgEntryPath = resolve(tempPkgPath, 'index.js');
 
 export async function installAndLoadPkg(name: string): Promise<string> {
-  await rm(tempPkgPath, {
-    force: true,
-    recursive: true,
-  });
+  await rmrf(tempPkgPath);
   await mkdir(tempPkgPath, {
     recursive: true,
   });

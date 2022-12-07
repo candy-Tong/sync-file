@@ -1,5 +1,7 @@
-import { cp } from 'node:fs/promises';
-import { resolve, relative, posix, win32 } from 'node:path';
+import { cp, rm } from 'node:fs/promises';
+import {
+  resolve, relative, posix, win32,
+} from 'node:path';
 import _debug from 'debug';
 import fg from 'fast-glob';
 import chalk from 'chalk';
@@ -60,4 +62,13 @@ export async function copyFileToTempDirFromConfig(sourceDir: string) {
     recursive: true,
   });
   debug('copy files, config > temp dir');
+}
+
+export async function rmrf(path:string) {
+  return rm(path, {
+    maxRetries: 2,
+    force: true,
+    recursive: true,
+    retryDelay: 100,
+  });
 }

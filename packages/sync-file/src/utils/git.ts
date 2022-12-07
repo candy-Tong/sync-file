@@ -1,9 +1,10 @@
-import { writeFile, rm } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import _debug from 'debug';
 import { execa, Options as ExecaOptions } from 'execa';
 import chalk from 'chalk';
 import { tempFilesPath, tempGitPath } from './path';
+import { rmrf } from './file';
 
 const debug = _debug('sync-file:git');
 export const latestBranchName = 'latest';
@@ -96,8 +97,5 @@ export async function createEmptyFile() {
 }
 
 export async function cleanGitDir() {
-  await rm(tempFilesPath, {
-    force: true,
-    recursive: true,
-  });
+  await rmrf(tempFilesPath);
 }

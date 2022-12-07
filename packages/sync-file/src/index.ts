@@ -3,7 +3,6 @@ import * as process from 'process';
 import chalk from 'chalk';
 import {
   mkdir,
-  rm,
 } from 'node:fs/promises';
 import _debug from 'debug';
 import {
@@ -15,7 +14,7 @@ import {
 import {
   copyFileToCacheDirFromConfig, copyFileToProjectFromTempDir,
   copyFileToTempDirFromCache, copyFileToTempDirFromConfig,
-  copyFileToTempDirFromProject,
+  copyFileToTempDirFromProject, rmrf,
 } from './utils/file';
 import { installAndLoadPkg } from './utils/package';
 
@@ -41,10 +40,7 @@ async function start() {
   }
 
   // clear temp dir, rm-rf
-  await rm(tempGitPath, {
-    force: true,
-    recursive: true,
-  });
+  await rmrf(tempGitPath);
 
   // create a temporary git repository
   await mkdir(tempFilesPath, {
@@ -86,10 +82,7 @@ async function start() {
   // copy files from tempDir to project
   await copyFileToProjectFromTempDir();
 
-  await rm(cacheDir, {
-    force: true,
-    recursive: true,
-  });
+  await rmrf(cacheDir);
   // copy files to cache dir
   await copyFileToCacheDirFromConfig(sourceDir);
   console.log(chalk.blue('[auto-sync-file] sync files successfully'));
