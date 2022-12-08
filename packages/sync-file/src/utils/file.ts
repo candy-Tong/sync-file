@@ -5,6 +5,7 @@ import {
 import _debug from 'debug';
 import fg from 'fast-glob';
 import chalk from 'chalk';
+import { access } from 'fs/promises';
 import {
   cacheDir, processPath, tempFilesPath,
 } from './path';
@@ -65,6 +66,12 @@ export async function copyFileToTempDirFromConfig(sourceDir: string) {
 }
 
 export async function rmrf(path:string) {
+  try {
+    await access(path);
+  } catch (e) {
+    debug('path not exist:', path);
+    return null;
+  }
   return rm(path, {
     maxRetries: 2,
     force: true,
