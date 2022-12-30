@@ -16,13 +16,15 @@ import {
   copyFileToTempDirFromCache, copyFileToTempDirFromConfig,
   copyFileToTempDirFromProject, rmrf,
 } from './utils/file';
-import { installAndLoadPkg } from './utils/package';
+import { getPkgAndVersion, installAndLoadPkg } from './utils/package';
 
 const debug = _debug('sync-file:main');
 const argv = minimist(process.argv.slice(2));
 debug('argv:', argv);
 
-const entry = argv._[0];
+const entryWithVersion: string = argv._[0];
+
+const { name: entry, version } = getPkgAndVersion(entryWithVersion);
 
 if (!entry) {
   throw new Error('no entry');
@@ -36,7 +38,7 @@ async function start() {
     const entryModule = await import(entry);
     sourceDir = entryModule.default;
   } catch (e) {
-    sourceDir = await installAndLoadPkg(entry);
+    sourceDir = await installAndLoadPkg(entry, version);
   }
 
   // clear temp dir, rm-rf

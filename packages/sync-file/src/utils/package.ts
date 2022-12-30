@@ -8,7 +8,7 @@ import { rmrf } from './file';
 const debug = _debug('sync-file:package');
 const tempPkgEntryPath = resolve(tempPkgPath, 'index.js');
 
-export async function installAndLoadPkg(name: string): Promise<string> {
+export async function installAndLoadPkg(name: string, version?: string): Promise<string> {
   await rmrf(tempPkgPath);
   await mkdir(tempPkgPath, {
     recursive: true,
@@ -17,7 +17,8 @@ export async function installAndLoadPkg(name: string): Promise<string> {
     stdio: debug.enabled ? 'inherit' : 'ignore',
     cwd: tempPkgPath,
   });
-  await execa('npm', ['i', name, '--ignore-script', '-D'], {
+  const pkgWithVersion = version ? `${name}@${version}` : name;
+  await execa('npm', ['i', pkgWithVersion, '--ignore-script', '-D'], {
     stdio: debug.enabled ? 'inherit' : 'ignore',
     cwd: tempPkgPath,
   });
@@ -27,4 +28,18 @@ export async function installAndLoadPkg(name: string): Promise<string> {
   const res = await import(tempPkgEntryPath);
   debug('module result:', res.default);
   return res.default;
+}
+
+export function getPkgAndVersion(name: string) {
+  // 报名带 version
+  if (name.includes('@', 1)) {
+    const index = name.lastIndexOf('@');
+    return {
+      name: name.substring(0, index),
+      version: name.substring(index + 1),
+    };
+  }
+  return {
+    name,
+  };
 }
