@@ -1,6 +1,6 @@
 {
   "name": "auto-sync-file",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "type": "module",
   "main": "packages/sync-file/src/index.js",
   "bin": {
