@@ -96,6 +96,6 @@ export async function createEmptyFile() {
   await writeFile(resolve(tempGitPath, emptyFileName), '');
 }
 
-export async function cleanGitDir() {
+export async function cleanTempDir() {
   await rmrf(tempFilesPath);
 }

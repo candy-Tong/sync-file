@@ -21,7 +21,8 @@
     "eslint-plugin-node": "^11.1.0",
     "lerna": "^6.1.0",
     "tsx": "^3.12.1",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "auto-sync-file-example-package": "workspace:^"
   },
   "keywords": [],
   "author": "",

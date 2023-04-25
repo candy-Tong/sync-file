@@ -1,7 +1,6 @@
 {
   "name": "auto-sync-file",
   "version": "0.0.22",
-  "description": "",
   "type": "module",
   "main": "packages/sync-file/src/index.js",
   "bin": {
@@ -32,5 +31,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "gitHead": "2e94660d7168789fb409d8ce886ee36f2842ba18"
+  "description": ""
 }

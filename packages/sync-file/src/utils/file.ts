@@ -1,6 +1,6 @@
-import { cp, rm } from 'node:fs/promises';
+import { cp, rm, rename } from 'node:fs/promises';
 import {
-  resolve, relative, posix, win32,
+  resolve, relative, posix, win32, basename, dirname,
 } from 'node:path';
 import _debug from 'debug';
 import fg from 'fast-glob';
@@ -24,6 +24,7 @@ export async function copyFileToCacheDirFromConfig(sourceDir: string) {
     recursive: true,
   });
   debug('copy files, config > cache');
+  await renameFiles(cacheDir);
 }
 
 export async function copyFileToTempDirFromCache() {
@@ -63,6 +64,7 @@ export async function copyFileToTempDirFromConfig(sourceDir: string) {
     recursive: true,
   });
   debug('copy files, config > temp dir');
+  await renameFiles(tempFilesPath);
 }
 
 export async function rmrf(path:string) {
@@ -78,4 +80,37 @@ export async function rmrf(path:string) {
     recursive: true,
     retryDelay: 100,
   });
+}
+
+/**
+ * rename the file: _xxx => .xxx
+ * @param path
+ */
+function fixFileName(path:string) {
+  const fileName = basename(path);
+
+  if (fileName.startsWith('_')) {
+    const dir = dirname(path);
+    return resolve(dir, fileName.replace('_', '.'));
+  }
+  return path;
+}
+
+export async function renameFiles(path: string) {
+  const normalizePath = resolve(path, './**').split(win32.sep).join(posix.sep);
+  const entries = fg.sync([normalizePath], { dot: true });
+
+  await Promise.all(
+    entries.map(async (file) => {
+      if (basename(file).startsWith('_')) {
+        try {
+          const name = fixFileName(file);
+          await rename(file, name);
+          debug(`rename ${file} to ${file.replace('_', '.')}  success`);
+        } catch (e) {
+          console.log(chalk.red(`[auto-sync-file] rename file(${file}) fail`));
+        }
+      }
+    }),
+  );
 }

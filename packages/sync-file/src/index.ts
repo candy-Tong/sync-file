@@ -9,7 +9,7 @@ import {
   cacheDir, tempFilesPath, tempGitPath,
 } from './utils/path';
 import {
-  mainBranchName, cleanGitDir, createEmptyFile, git, latestBranchName,
+  mainBranchName, cleanTempDir, createEmptyFile, git, latestBranchName,
 } from './utils/git';
 import {
   copyFileToCacheDirFromConfig, copyFileToProjectFromTempDir,
@@ -66,7 +66,7 @@ async function start() {
   await git.branch(latestBranchName);
 
   // commit current project files
-  await cleanGitDir();
+  await cleanTempDir();
   // copy project files
   await copyFileToTempDirFromProject();
   await git.addAll();
@@ -74,7 +74,7 @@ async function start() {
 
   // commit the latest config files
   await git.checkout(latestBranchName);
-  await cleanGitDir();
+  await cleanTempDir();
   await copyFileToTempDirFromConfig(sourceDir);
   await git.addAll();
   await git.commit('the latest config files');
