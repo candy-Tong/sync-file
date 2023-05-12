@@ -68,7 +68,7 @@ async function start() {
   // commit current project files
   await cleanTempDir();
   // copy project files
-  await copyFileToTempDirFromProject();
+  await copyFileToTempDirFromProject(sourceDir);
   await git.addAll();
   await git.commit('current project config files');
 
